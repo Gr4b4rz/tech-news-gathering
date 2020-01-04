@@ -1,0 +1,65 @@
+version: "3.7"
+services:
+  es1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    environment:
+      - node.name=es1
+      - discovery.seed_hosts=es2
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es1,es2
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - type: volume
+        source: data1
+        target: /usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD", "curl", "http://es.tama.exa:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  es2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    environment:
+      - node.name=es2
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es1,es2
+      - discovery.seed_hosts=es1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - type: volume
+        source: data2
+        target: /usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+    networks:
+      - elastic
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD", "curl", "http://es.tama.exa:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
+volumes:
+  data1:
+    driver: local
+  data2:
+    driver: local
+
+networks:
+  elastic:
+
