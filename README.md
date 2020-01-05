@@ -2,12 +2,10 @@
 
 ## Installation
 
-1. Prepare your virtual environment.
+1. Create folder for elastic data.
 
     ```console
-    pip3 install virtualenv
-    python3 -m venv ENV
-    source ENV/bin/activate
+    mkdir esdata
     ```
 
 2. Setup elasticsearch
@@ -26,6 +24,7 @@
     ```console
     sudo service docker start
     ```
+3. Build project
 
     Start docker-compose from root project folder.
 
@@ -34,14 +33,13 @@
     sudo docker-compose up
     ```
 
-3. Using pip install requirements:
-
-    ```console
-    pip3 install -r requirements.txt
-    ```
-
 ## Usage
+Find elasticsearch cluster on: http://localhost:9200/
 
+Find django app on: http://localhost:8003/articles/
+
+Schedule new site to be scraped
 ```console
-python3 main.py
-```
+curl -XPOST -d '{"site-url": "ARTICLE-URL"}' localhost:8003/articles/task```
+
+Go to http://localhost:9200/processed-data/_search, to see all scraped articles
