@@ -6,17 +6,21 @@ class ESWrapper:
     Elasticsearch wrapper
     """
     @staticmethod
-    def connect_elasticsearch(host='localhost', port=9200):
+    def connect_elasticsearch(host='es1', port=9200):
         """
         Establish connection with Elasticsearch database.
         """
         es = None
-        es = Elasticsearch([{'host': 'localhost', 'port': port}])
+        es = Elasticsearch([{'host': host, 'port': port}])
         if es.ping():
             print('Connected')
         else:
             print('Cannot connect')
         return es
+
+    @staticmethod
+    def insert_document(es_object, index_name, body):
+        return es_object.index(index=index_name, body=body)
 
     @staticmethod
     def create_index(es_object, index_name):
