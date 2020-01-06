@@ -6,7 +6,7 @@ class ESWrapper:
     Elasticsearch wrapper
     """
     @staticmethod
-    def connect_elasticsearch(host='es1', port=9200):
+    def connect_elasticsearch(host='es', port=9200):
         """
         Establish connection with Elasticsearch database.
         """

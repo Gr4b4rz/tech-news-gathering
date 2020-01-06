@@ -1,12 +1,12 @@
 version: "3.7"
 services:
-  es1:
+  es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
     environment:
-      - node.name=es1
-      - discovery.seed_hosts=es1
+      - node.name=es
+      - discovery.seed_hosts=es
       - cluster.name=es-docker-cluster
-      - cluster.initial_master_nodes=es1
+      - cluster.initial_master_nodes=es
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
     volumes:
@@ -35,7 +35,7 @@ services:
     ports:
       - "8003:8000"
     depends_on:
-      - es1
+      - es
   celery:
     build: news_gathering
     command: celery -A news_gathering worker -l info

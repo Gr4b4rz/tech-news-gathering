@@ -43,3 +43,8 @@ Schedule new site to be scraped
 curl -XPOST -d '{"site-url": "ARTICLE-URL"}' localhost:8003/articles/task```
 
 Go to http://localhost:9200/processed-data/_search, to see all scraped articles
+or use curl with jq:
+
+```console
+curl http://localhost:9200/processed-data/_search | jq
+```
