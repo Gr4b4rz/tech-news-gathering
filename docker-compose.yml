@@ -46,6 +46,15 @@ services:
     command: celery -A news_gathering beat -l info
     depends_on:
       - redis
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: http://es:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - es
 volumes:
   esdata:
 #

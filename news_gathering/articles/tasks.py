@@ -6,6 +6,5 @@ logger = get_task_logger(__name__)
 
 @task(name="new_article_task")
 def parse_article_task(url):
-    """sends an email when feedback form is filled successfully"""
-    logger.info("Sent feedback email")
+    logger.info("Got article to parse")
     return parse_article(url)
